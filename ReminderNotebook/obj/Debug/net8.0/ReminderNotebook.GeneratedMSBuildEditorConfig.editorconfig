@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /Users/anastasiavorobey/Desktop/KPZ_FinalProject/ReminderNotebook
 build_property._RazorSourceGeneratorDebug = 
 
+[/Users/anastasiavorobey/Desktop/KPZ_FinalProject/ReminderNotebook/Views/Home/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/anastasiavorobey/Desktop/KPZ_FinalProject/ReminderNotebook/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

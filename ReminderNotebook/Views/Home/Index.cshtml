@@ -24,6 +24,9 @@
     {
         <li>
             @reminder.Title - @reminder.Description - @reminder.Date
+            <form method="get" action="/Home/Edit/@reminder.Id" style="display:inline;">
+                <button type="submit">Редагувати</button>
+            </form>
             <form method="post" action="/Home/Delete/@reminder.Id" style="display:inline;">
                 <button type="submit">Видалити</button>
             </form>
