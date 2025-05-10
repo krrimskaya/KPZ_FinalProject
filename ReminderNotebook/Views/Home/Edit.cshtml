@@ -1,0 +1,21 @@
+@model ElectronicReminderApp.Models.Reminder
+
+<h2>Редагування Нагадування</h2>
+
+<form method="post" action="/Home/Edit">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div>
+        <label for="Title">Заголовок:</label>
+        <input type="text" id="Title" name="Title" value="@Model.Title" required />
+    </div>
+    <div>
+        <label for="Description">Опис:</label>
+        <input type="text" id="Description" name="Description" value="@Model.Description" required />
+    </div>
+    <div>
+        <label for="Date">Дата:</label>
+        <input type="datetime-local" id="Date" name="Date" value="@Model.Date.ToString("yyyy-MM-ddTHH:mm")" required />
+    </div>
+    <button type="submit">Зберегти зміни</button>
+</form>
