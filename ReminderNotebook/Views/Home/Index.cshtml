@@ -1,0 +1,32 @@
+﻿@model List<ElectronicReminderApp.Models.Reminder>
+
+<h2>Нагадування</h2>
+
+<form method="post" action="/Home/Add">
+    <div>
+        <label for="Title">Заголовок:</label>
+        <input type="text" id="Title" name="Title" required />
+    </div>
+    <div>
+        <label for="Description">Опис:</label>
+        <input type="text" id="Description" name="Description" required />
+    </div>
+    <div>
+        <label for="Date">Дата:</label>
+        <input type="datetime-local" id="Date" name="Date" required />
+    </div>
+    <button type="submit">Додати</button>
+</form>
+
+<h3>Список Нагадувань:</h3>
+<ul>
+    @foreach (var reminder in Model ?? new List<ElectronicReminderApp.Models.Reminder>())
+    {
+        <li>
+            @reminder.Title - @reminder.Description - @reminder.Date
+            <form method="post" action="/Home/Delete/@reminder.Id" style="display:inline;">
+                <button type="submit">Видалити</button>
+            </form>
+        </li>
+    }
+</ul>
