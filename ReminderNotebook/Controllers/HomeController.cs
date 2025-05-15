@@ -1,61 +1,54 @@
-using ElectronicReminderApp.Models;
 using ElectronicReminderApp.Services;
+using ElectronicReminderApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace ElectronicReminderApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly FileDataService _fileDataService;
+        private readonly ReminderService _reminderService;
 
-        public HomeController()
+        public HomeController(ReminderService reminderService)
         {
-            _fileDataService = new FileDataService();
+            _reminderService = reminderService;
         }
 
-        // Дія для відображення сторінки з нагадуваннями
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var reminders = _fileDataService.LoadReminders();
+            var reminders = await _reminderService.GetAllAsync();
             return View(reminders);
         }
 
-        // Дія для додавання нового нагадування
         [HttpPost]
-        public IActionResult Add(Reminder reminder)
+        public async Task<IActionResult> Add(Reminder reminder, string[] Tags)
         {
-            var reminders = _fileDataService.LoadReminders();
-            reminder.Id = _fileDataService.GetNextId();  // Генерація унікального Id
-            reminders.Add(reminder);
-            _fileDataService.SaveReminders(reminders);
-            return RedirectToAction("Index");
-        }
-
-        // Дія для видалення нагадування
-        public IActionResult Delete(int id)
-        {
-            var reminders = _fileDataService.LoadReminders();
-            var reminderToDelete = reminders.FirstOrDefault(r => r.Id == id);
-            if (reminderToDelete != null)
+            if (ModelState.IsValid)
             {
-                reminders.Remove(reminderToDelete);
-                _fileDataService.SaveReminders(reminders);
+                reminder.Tags = string.Join(",", Tags);
+                await _reminderService.AddAsync(reminder);
+                return RedirectToAction("Index");
             }
+            var reminders = await _reminderService.GetAllAsync();
+            return View("Index", reminders);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _reminderService.DeleteAsync(id);
             return RedirectToAction("Index");
         }
 
-        // Дія для відображення форми редагування
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var reminders = _fileDataService.LoadReminders();
-            var reminder = reminders.FirstOrDefault(r => r.Id == id);
+            var reminder = await _reminderService.GetByIdAsync(id);
             if (reminder == null)
             {
                 return NotFound();
             }
 
-            // Перевірка, чи залишилось більше хвилини до нагадування
             if (reminder.Date <= DateTime.Now.AddMinutes(1))
             {
                 return RedirectToAction("Index");
@@ -64,20 +57,16 @@ namespace ElectronicReminderApp.Controllers
             return View(reminder);
         }
 
-        // Дія для обробки редагування нагадування
         [HttpPost]
-        public IActionResult Edit(Reminder reminder)
+        public async Task<IActionResult> Edit(Reminder reminder, string[] Tags)
         {
-            var reminders = _fileDataService.LoadReminders();
-            var reminderToUpdate = reminders.FirstOrDefault(r => r.Id == reminder.Id);
-            if (reminderToUpdate != null)
+            if (ModelState.IsValid)
             {
-                reminderToUpdate.Title = reminder.Title;
-                reminderToUpdate.Description = reminder.Description;
-                reminderToUpdate.Date = reminder.Date;
-                _fileDataService.SaveReminders(reminders);
+                reminder.Tags = string.Join(",", Tags);
+                await _reminderService.UpdateAsync(reminder);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return View(reminder);
         }
     }
 }

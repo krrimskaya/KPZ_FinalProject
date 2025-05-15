@@ -2,7 +2,7 @@
 
 <h2>Нагадування</h2>
 
-<form method="post" action="/Home/Add">
+<form method="post" asp-action="Add">
     <div>
         <label for="Title">Заголовок:</label>
         <input type="text" id="Title" name="Title" required />
@@ -15,6 +15,13 @@
         <label for="Date">Дата:</label>
         <input type="datetime-local" id="Date" name="Date" required />
     </div>
+    <div>
+        <label>Теги:</label><br/>
+        <input type="checkbox" id="work" name="Tags" value="Робота" /> <label for="work">Робота</label>
+        <input type="checkbox" id="study" name="Tags" value="Навчання" /> <label for="study">Навчання</label>
+        <input type="checkbox" id="personal" name="Tags" value="Особисте" /> <label for="personal">Особисте</label>
+        <input type="checkbox" id="health" name="Tags" value="Здоров'я" /> <label for="health">Здоров'я</label>
+    </div>
     <button type="submit">Додати</button>
 </form>
 
@@ -23,11 +30,23 @@
     @foreach (var reminder in Model ?? new List<ElectronicReminderApp.Models.Reminder>())
     {
         <li>
-            @reminder.Title - @reminder.Description - @reminder.Date
-            <form method="get" action="/Home/Edit/@reminder.Id" style="display:inline;">
+            <strong>@reminder.Title</strong> - @reminder.Description - @reminder.Date.ToString("g")<br/>
+
+            @if (!string.IsNullOrEmpty(reminder.Tags))
+            {
+                var tags = reminder.Tags.Split(',');
+                foreach (var tag in tags)
+                {
+                    <span style="display:inline-block; background-color:#007bff; color:white; padding:2px 8px; border-radius:12px; margin-right:5px; font-size:0.9em;">
+                        @tag
+                    </span>
+                }
+            }
+
+            <form method="get" asp-action="Edit" asp-route-id="@reminder.Id" style="display:inline;">
                 <button type="submit">Редагувати</button>
             </form>
-            <form method="post" action="/Home/Delete/@reminder.Id" style="display:inline;">
+            <form method="post" asp-action="Delete" asp-route-id="@reminder.Id" style="display:inline;">
                 <button type="submit">Видалити</button>
             </form>
         </li>
