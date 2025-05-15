@@ -1,8 +1,12 @@
 @model ElectronicReminderApp.Models.Reminder
 
+@{
+    var selectedTags = Model.Tags?.Split(',') ?? new string[0];
+}
+
 <h2>Редагування Нагадування</h2>
 
-<form method="post" action="/Home/Edit">
+<form method="post" asp-action="Edit">
     <input type="hidden" name="Id" value="@Model.Id" />
 
     <div>
@@ -17,5 +21,13 @@
         <label for="Date">Дата:</label>
         <input type="datetime-local" id="Date" name="Date" value="@Model.Date.ToString("yyyy-MM-ddTHH:mm")" required />
     </div>
+    <div>
+        <label>Теги:</label><br/>
+        <input type="checkbox" id="work" name="Tags" value="Робота" @(selectedTags.Contains("Робота") ? "checked" : "") /> <label for="work">Робота</label>
+        <input type="checkbox" id="study" name="Tags" value="Навчання" @(selectedTags.Contains("Навчання") ? "checked" : "") /> <label for="study">Навчання</label>
+        <input type="checkbox" id="personal" name="Tags" value="Особисте" @(selectedTags.Contains("Особисте") ? "checked" : "") /> <label for="personal">Особисте</label>
+        <input type="checkbox" id="health" name="Tags" value="Здоров'я" @(selectedTags.Contains("Здоров'я") ? "checked" : "") /> <label for="health">Здоров'я</label>
+    </div>
+
     <button type="submit">Зберегти зміни</button>
 </form>
