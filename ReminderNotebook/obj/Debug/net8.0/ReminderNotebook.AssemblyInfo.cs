@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReminderNotebook")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e8efcef66ea9450b48910eaa2ee36523e9d2bc85")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6dbb69ec3ba026ed3bf9f8468ae6b745397c9e23")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReminderNotebook")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReminderNotebook")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
