@@ -1,0 +1,33 @@
+@model ElectronicReminderApp.ViewModels.LoginViewModel
+
+<h2>Вхід</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div style="color: green; margin-bottom: 10px;">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<form asp-action="Login" method="post">
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div>
+        <label>Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label>Пароль</label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <input asp-for="RememberMe" />
+        <label>Запам'ятати мене</label>
+    </div>
+    <button type="submit">Увійти</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

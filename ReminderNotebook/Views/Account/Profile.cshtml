@@ -1,0 +1,13 @@
+@model ElectronicReminderApp.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Профіль користувача";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Ім'я користувача:</strong> @Model.UserName</p>
+    <p><strong>Телефон:</strong> @(string.IsNullOrEmpty(Model.PhoneNumber) ? "не вказано" : Model.PhoneNumber)</p>
+</div>
